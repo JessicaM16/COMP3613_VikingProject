@@ -12,6 +12,7 @@ from App.controllers import (
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')  
     
+    ##Sign-up route!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 @user_views.route('/api/users', methods=['POST'])
 def create_user_action():
 
