@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory
 from flask_jwt import jwt_required
 from App.models import User
+from App.database import db
+
 from App.controllers import (
     create_user, 
     get_all_users,
@@ -9,18 +11,20 @@ from App.controllers import (
 )
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')  
-
+    
 @user_views.route('/api/users', methods=['POST'])
 def create_user_action():
-    data = request.json # get data from request body
 
-    u = User.query.filter_by(username=data['username']).first()
-    if u:
-        return jsonify({"message": " User Exist Already "})
-    else:
-        user = create_user(data['username'], data['password'])
-        return jsonify({"message":f" {data['username']} created with id {user.id}"})
-    
+    data = request.json # get data from request body
+    user = User.query.filter_by(email=data['email']).first() # if this returns a user, then the email already exists in database
+
+    if user:
+        return jsonify({"message":f" Email Already Used"})
+    newuser = User(username=data['username'], password=data['password'], email=data['email'], role= data['role'])
+    db.session.add(newuser)
+    db.session.commit()
+    return jsonify({"message":f" Account Created"})
+
 @user_views.route('/users', methods=['GET'])
 def get_user_page():
     users = get_all_users()
