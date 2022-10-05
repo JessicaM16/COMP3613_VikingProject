@@ -17,7 +17,8 @@ from App.controllers import (
 from App.views import (
     user_views,
     index_views,
-    recommendation_views
+    recommendation_views,
+    logout_views
 )
 
 # New views must be imported and added to this list
@@ -25,7 +26,8 @@ from App.views import (
 views = [
     user_views,
     index_views,
-    recommendation_views
+    recommendation_views,
+    logout_views
 ]
 
 def add_views(app, views):
@@ -61,4 +63,17 @@ def create_app(config={}):
     create_db(app)
     setup_jwt(app)
     app.app_context().push()
+   # login_manager = LoginManager(app) #
+
+        #weird stuff make login work
+    login_manager = LoginManager()
+   # login_manager.login_view = 'auth.login'
+    login_manager.init_app(app)
+    from .models import User
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+
+    #login_manager.profile_view = 'auth.login'
+
     return app
