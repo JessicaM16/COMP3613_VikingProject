@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory
-from flask_jwt import jwt_required
+from flask_jwt import jwt_required, current_identity
 from App.models import User
 from App.database import db
 
@@ -21,9 +21,10 @@ def create_user_action():
 
     if user:
         return jsonify({"message":f" Email Already Used"})
-    newuser = User(username=data['username'], password=data['password'], email=data['email'], role= data['role'])
-    db.session.add(newuser)
-    db.session.commit()
+    #change like sir code
+    #newuser = User(username=data['username'], password=data['password'], email=data['email'], role= data['role'])
+    #db.session.add(newuser)
+    #db.session.commit()
     return jsonify({"message":f" Account Created"})
 
 @user_views.route('/users', methods=['GET'])
@@ -31,10 +32,15 @@ def get_user_page():
     users = get_all_users()
     return render_template('users.html', users=users)
 
-@user_views.route('/api/users')
-def client_app():
+@user_views.route('/api/users', methods=['GET'])
+def get_users_action():
     users = get_all_users_json()
     return jsonify(users)
+
+@user_views.route('/identify', methods=['GET'])
+@jwt_required()
+def identify_user_action():
+    return jsonify({'message': f"user: {current_identity.username}"})
 
 @user_views.route('/static/users')
 def static_user_page():
