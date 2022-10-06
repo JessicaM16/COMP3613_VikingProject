@@ -13,9 +13,13 @@ recommendation_views = Blueprint('recommendation_views', __name__, template_fold
 @recommendation_views.route('/api/recommendation', methods=['POST'])
 @jwt_required()
 def create_recommendation_action():
-    data = request.json # get data from request body
-    recommendation = create_recommendation(data['letter'], data['recipient_id'])
-    return jsonify({"message":f" {data['letter']} created with id {recommendation.id} for user {current_identity.id}"})
+    #if user is a teacher how to do that
+    if current_identity.role == 'teacher':
+        data = request.json # get data from request body
+        recommendation = create_recommendation(data['letter'], data['recipient_id'])
+        return jsonify({"message":f" {data['letter']} created with id {recommendation.id} for user {current_identity.id}"})
+    else:
+        return jsonify({"message": f"Must be logged in as a teacher"})
 
 @recommendation_views.route('/recommendation', methods=['GET'])
 @jwt_required()
