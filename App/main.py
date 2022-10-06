@@ -17,8 +17,7 @@ from App.controllers import (
 from App.views import (
     user_views,
     index_views,
-    recommendation_views,
-    logout_views
+    recommendation_views
 )
 
 # New views must be imported and added to this list
@@ -26,8 +25,7 @@ from App.views import (
 views = [
     user_views,
     index_views,
-    recommendation_views,
-    logout_views
+    recommendation_views
 ]
 
 def add_views(app, views):
@@ -46,7 +44,7 @@ def loadConfig(app, config):
         app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
         app.config['DEBUG'] = os.environ.get('ENV').upper() != 'PRODUCTION'
         app.config['ENV'] = os.environ.get('ENV')
-        delta = app.config['JWT_EXPIRATION_DELTA']
+        delta = os.environ.get('JWT_EXPIRATION_DELTA', 7)
         
     app.config['JWT_EXPIRATION_DELTA'] = timedelta(days=int(delta))
         
@@ -67,17 +65,4 @@ def create_app(config={}):
     create_db(app)
     setup_jwt(app)
     app.app_context().push()
-   # login_manager = LoginManager(app) #
-
-        #weird stuff make login work
-    login_manager = LoginManager()
-   # login_manager.login_view = 'auth.login'
-    login_manager.init_app(app)
-    from .models import User
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User.query.get(int(user_id))
-
-    #login_manager.profile_view = 'auth.login'
-
     return app

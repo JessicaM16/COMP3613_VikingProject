@@ -1,8 +1,17 @@
 from App.models import Recommendation
-from App.database import db
+from App.database import db 
+from flask_jwt import current_identity
+import json 
 
-def create_recommendation(recommendation):
-    newrecommendation = Recommendation(letter=recommendation)
+def get_all_recommendation_for_user_json(user_id):
+    recommendations = Recommendation.query.filter_by(recipient_id=current_identity.id).all()
+    if not recommendations:
+        return []
+    recommendations = [recommendation.toJSON() for recommendation in recommendations]
+    return json.dumps(recommendations)
+
+def create_recommendation(recommendation, recipient_id):
+    newrecommendation = Recommendation(letter=recommendation, recipient_id=recipient_id)
     db.session.add(newrecommendation)
     db.session.commit()
     return newrecommendation
@@ -18,7 +27,7 @@ def get_all_recommendation_json():
     if not recommendations:
         return []
     recommendations = [recommendation.toJSON() for recommendation in recommendations]
-    return recommendation
+    return recommendations
 
 def update_recommendation(ID, recommendation):
     recommendation = get_recommendation(ID)
