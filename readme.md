@@ -1,4 +1,4 @@
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/JessicaM16/COMP3613_VikingProject)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/uwidcit/flaskmvc)
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ![Tests](https://github.com/uwidcit/flaskmvc/actions/workflows/dev.yml/badge.svg)
@@ -83,7 +83,7 @@ $ flask run
 
 _For production using gunicorn (what heroku executes):_
 ```bash
-$ gunicorn App.main:app
+$ gunicorn wsgi:app
 ```
 
 # Deploying
