@@ -3,15 +3,19 @@ from App.database import db
 from flask_jwt import current_identity
 import json 
 
-def get_all_recommendation_for_user_json(user_id):
-    recommendations = Recommendation.query.filter_by(recipient_id=current_identity.id).all()
+def get_all_recommendation_for_user_json():
+    if current_identity.role == "student":
+        recommendations = Recommendation.query.filter_by(recipient_id=current_identity.id).all()
+    else:    
+        recommendations = Recommendation.query.filter_by(sender=current_identity.id).all()
+
     if not recommendations:
         return []
     recommendations = [recommendation.toJSON() for recommendation in recommendations]
     return json.dumps(recommendations)
 
 def create_recommendation(recommendation, recipient_id):
-    newrecommendation = Recommendation(letter=recommendation, recipient_id=recipient_id)
+    newrecommendation = Recommendation(letter=recommendation, recipient_id=recipient_id, sender = current_identity.id)
     db.session.add(newrecommendation)
     db.session.commit()
     return newrecommendation
