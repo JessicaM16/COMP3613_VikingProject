@@ -3,8 +3,8 @@ from App.database import db
 
 class Notification(db.Model):                             
     id = db.Column(db.Integer, primary_key=True)
-    reciever_id = db.Column(db.Interger, nullable=False)
-    sender_id = db.Column(db.Interger, nullable=False)
+    reciever_id = db.Column(db.Integer, nullable=False)
+    sender_id = db.Column(db.Integer, nullable=False)
     message = db.Column(db.String(200), nullable=False)
 
     def _init_(self, id, message, reciever_id, sender_id):

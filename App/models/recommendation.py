@@ -3,7 +3,7 @@ from App.database import db
 
 class Recommendation(db.Model):                              #check relationship !!!!!!!!!!!!!!!!!
     id = db.Column(db.Integer, primary_key=True)
-    recipient_id = db.Column(db.Interger,nullable=False)
+    recipient_id = db.Column(db.Integer,nullable=False)
     letter = db.Column(db.String(200), nullable=False)
 
     def _init_(self, ID, Letter, recipient_id):
