@@ -21,7 +21,7 @@ def create_recommendation_action():
     if current_identity.role == 'teacher':          # checks that only teachers can create recommendations
         data = request.json         # get data from request body
         recommendation = create_recommendation(data['letter'], data['recipient_id'])
-        return jsonify({"message":f" {data['letter']} created with id {recommendation.id} for user {current_identity.id}"})
+        return jsonify({"id": f"{recommendation.id}", "message":f" {recommendation.letter}", "recipient_id":f"{recommendation.recipient_id}", "sender": f"{recommendation.sender}" })
     else:
         return jsonify({"message": f"Must be logged in as a teacher"})          #if user is not a teacher
 
