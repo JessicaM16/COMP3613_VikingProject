@@ -28,8 +28,11 @@ def create_user_action():
 #displays a html page containing all user info
 @user_views.route('/users', methods=['GET'])
 def get_user_page():
-    users = get_all_users()
-    return render_template('users.html', users=users)
+    users = get_all_users_json()
+    if users:
+        return users
+    return jsonify({"message": f"No Users"})
+
 
 
 
