@@ -8,10 +8,10 @@ class Recommendation(db.Model):
     letter = db.Column(db.String(200), nullable=False)
 
     def _init_(self, ID, Letter, recipient_id):
-        self.id = ID                                #for the rec
-        self.letter = Letter                        #message itself
-        self.recipient_id = recipient_id            #who it is for
-        self.sender
+        self.id = ID                                # the recommendation ID
+        self.letter = letter                        # recommendation message content
+        self.recipient_id = recipient_id            # the student that recieves the recommendation (who it is for)
+        self.sender                                 # the teacher that writes the recommendation (who it is from)
 
     def toJSON(self):
         return{

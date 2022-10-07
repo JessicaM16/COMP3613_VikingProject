@@ -11,10 +11,10 @@ from App.controllers import (
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
-##Sign-up route!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#Sign-up/Create user route
 @user_views.route('/api/users', methods=['POST'])#
 def create_user_action():
-    data = request.json # get data from request body
+    data = request.json 
     user = User.query.filter_by(email=data['email']).first() # if this returns a user, then the email already exists in database
     if user:
         return jsonify({"message":f" Email Already Used"})

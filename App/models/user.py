@@ -12,10 +12,10 @@ class User(db.Model, UserMixin):
     recommendations = db.relationship('Recommendation', backref='user', lazy=True, cascade="all, delete-orphan")
 
     def __init__(self, username, email, password, role):
-        self.username = username
-        self.email = email
-        self.role = role
-        self.set_password(password)
+        self.username = username                            # the user's ID
+        self.email = email                                  # the user's
+        self.role = role                                    # the role of the user(student or teacher)
+        self.set_password(password)                         # sets the password of the user
 
     def toJSON(self):
         return{

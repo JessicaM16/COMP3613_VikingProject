@@ -2,17 +2,21 @@ from flask import Blueprint, render_template, jsonify, request, send_from_direct
 from flask_jwt import jwt_required, current_identity
 
 from App.controllers import (
-    create_recommendation, 
-    get_all_recommendation,
-    get_all_recommendation_json,
-    get_all_recommendation_for_user_json
+    create_notification,
+    get_all_notifications_for_user_json
 )
 
-recommendation_views = Blueprint('recommendation_views', __name__, template_folder='../templates')  
 
-@recommendation_views.route('/api/recommendation', methods=['POST'])
+# request recommendation calls the create notification function asking the staff
+# reject recommendation calls the create notification function saying rejected to the student
+# and create the views for each user to view notifications 
+
+
+notification_views = Blueprint('notification_views', __name__, template_folder='../templates')  
+
+@notification_views.route('/api/notification', methods=['POST'])
 @jwt_required()
-def create_notification_action():
+def create_recommendation_action():
     if current_identity.role == 'teacher':                          # checks that only teachers can create recommendations
         data = request.json                                         # get data from request body
         recommendation = create_recommendation(data['letter'], data['recipient_id'])
@@ -20,7 +24,7 @@ def create_notification_action():
     else:
         return jsonify({"message": f"Must be logged in as a teacher"})          #if user is not a teacher
 
-@recommendation_views.route('/recommendation', methods=['GET'])
+@notification_views.route('/recommendation', methods=['GET'])
 @jwt_required()
 def get_all_recommendation_for_user():
     recommendations = get_all_recommendation_for_user_json()
