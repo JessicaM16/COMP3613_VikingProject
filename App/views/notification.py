@@ -35,3 +35,5 @@ def get_all_notification_for_user():
     else:
         return jsonify({"message": f"No notifications"})
 
+
+

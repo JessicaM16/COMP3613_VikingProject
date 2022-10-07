@@ -11,7 +11,10 @@ from App.controllers import (
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
-#Sign-up/Create user route
+#Sign-up/Create user route -
+#   Creates a new User(role: staff  or  student).
+#   Checks that the user does not already exist by checking its email.
+#   Creates new User if email not found 
 @user_views.route('/api/users', methods=['POST'])#
 def create_user_action():
     data = request.json 
@@ -22,10 +25,14 @@ def create_user_action():
     return jsonify({"message":f" Account Created"})
 
 
+#displays a html page containing all user info
 @user_views.route('/users', methods=['GET'])
 def get_user_page():
     users = get_all_users()
     return render_template('users.html', users=users)
+
+
+
 
 @user_views.route('/api/users', methods=['GET'])
 def get_users_action():
@@ -40,3 +47,5 @@ def identify_user_action():
 @user_views.route('/static/users', methods=['GET'])
 def static_user_page():
   return send_from_directory('static', 'static-user.html')
+
+

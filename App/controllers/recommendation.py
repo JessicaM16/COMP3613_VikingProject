@@ -3,6 +3,8 @@ from App.database import db
 from flask_jwt import current_identity
 import json 
 
+# GET_ALL_RECOMMENDATION_FOR_USER_JSON
+# This is a list of all recommendations a user has 
 def get_all_recommendation_for_user_json():
     if current_identity.role == "student":
         recommendations = Recommendation.query.filter_by(recipient_id=current_identity.id).all()                        # student can only see its own recommendations

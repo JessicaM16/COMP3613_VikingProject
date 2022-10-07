@@ -4,19 +4,19 @@ from flask_login import UserMixin
 
 
 class User(db.Model, UserMixin): 
-    id = db.Column(db.Integer, primary_key=True)
-    username =  db.Column(db.String, nullable=False)
-    role =  db.Column(db.String, nullable=False)
-    email = db.Column(db.String(100), unique =True)
-    password = db.Column(db.String(120), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)            # the user's ID
+    username =  db.Column(db.String, nullable=False)        # the users Username
+    role =  db.Column(db.String, nullable=False)            # the role of the user(student or teacher)
+    email = db.Column(db.String(100), unique =True)         # the user's email address
+    password = db.Column(db.String(120), nullable=False)    # the password of the user
     recommendations = db.relationship('Recommendation', backref='user', lazy=True, cascade="all, delete-orphan")
     notifications = db.relationship('Notification', backref='user', lazy=True, cascade="all, delete-orphan")
 
     def __init__(self, username, email, password, role):
-        self.username = username                            # the user's ID
-        self.email = email                                  # the user's
-        self.role = role                                    # the role of the user(student or teacher)
-        self.set_password(password)                         # sets the password of the user
+        self.username = username                            
+        self.email = email                                  
+        self.role = role                                    
+        self.set_password(password)                         
 
     def toJSON(self):
         return{

@@ -2,16 +2,16 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from App.database import db
 
 class Recommendation(db.Model):                             
-    id = db.Column(db.Integer, primary_key=True)
-    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    sender = db.Column(db.Integer, nullable=False)                                      ##check if it needs to be forieggn
-    letter = db.Column(db.String(200), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)                                        # the recommendation ID
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)      # the student that recieves the recommendation (who it is for)
+    sender = db.Column(db.Integer, nullable=False)                                      # the teacher that writes the recommendation (who it is from)                                      
+    letter = db.Column(db.String(200), nullable=False)                                  # recommendation message content
 
     def _init_(self, ID, Letter, recipient_id):
-        self.id = ID                                # the recommendation ID
-        self.letter = letter                        # recommendation message content
-        self.recipient_id = recipient_id            # the student that recieves the recommendation (who it is for)
-        self.sender                                 # the teacher that writes the recommendation (who it is from)
+        self.id = ID                            
+        self.letter = letter                        
+        self.recipient_id = recipient_id            
+        self.sender                                 
 
     def toJSON(self):
         return{

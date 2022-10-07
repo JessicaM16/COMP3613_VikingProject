@@ -13,8 +13,8 @@ def create_notification(message, recipient_id):
 #Viewing Notifications of the current user
 def get_all_notifications_for_user_json():
 
-    notifications = Notification.query.filter_by(recipient_id=current_identity.id).all()
-    if notifications:
+    notifications = Notification.query.filter_by(recipient_id=current_identity.id).all()    #get notifications for the current user
+    if notifications:       # if the user has notifications
         notifications = [notification.toJSON() for notification in notifications]
         return json.dumps(notifications)
 
