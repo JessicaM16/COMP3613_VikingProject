@@ -30,13 +30,11 @@ def create_recommendation_action():
 @recommendation_views.route('/recommendation', methods=['GET'])
 @jwt_required()
 def get_all_recommendation_for_user():
-    if current_identity.role == "student":          #user has to be a student to have recommendations
-        recommendations = get_all_recommendation_for_user_json()
-        if recommendations:         # if recommendations exist return the recommendations else error message
-            return recommendations
-        return jsonify({"message": f"No recommendations"})
-    else:
-        return jsonify({"message": f"Only students can have recommendations"})
+    recommendations = get_all_recommendation_for_user_json()
+    if recommendations:         # if recommendations exist return the recommendations else error message
+        return recommendations
+    return jsonify({"message": f"No recommendations"})
+    
 
 
 # Request Recommendation - 
