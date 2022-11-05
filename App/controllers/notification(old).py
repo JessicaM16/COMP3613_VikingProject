@@ -10,12 +10,6 @@ def create_notification(message, recipient_id):
     db.session.commit()
     return newnotification
 
-def create_notification_cli(message, recipient_id, sender):
-    newnotification = Notification(message=message, recipient_id=recipient_id, sender = sender)
-    db.session.add(newnotification)
-    db.session.commit()
-    return newnotification
-
 #Viewing Notifications of the current user
 def get_all_notifications_for_user_json():
 
@@ -25,11 +19,3 @@ def get_all_notifications_for_user_json():
         return json.dumps(notifications)
 
     return []
-
-
-def get_all_notification_json():
-    notifications = Notification.query.all()
-    if not notifications:
-        return []
-    notifications = [notification.toJSON() for notification in notifications]
-    return notifications
