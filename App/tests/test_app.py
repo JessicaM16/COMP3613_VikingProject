@@ -21,6 +21,33 @@ LOGGER = logging.getLogger(__name__)
 '''
    Unit Tests
 '''
+
+class RecommendationUnitTests(unittest.TestCase):
+
+    def test_new_recommendation(self):
+        recommendation = Recommendation("1", "This is a recommendation for bob", "2", "1")
+        recommendation_json = recommendation.toJSON()
+        self.assertDictEqual(recommendation_json, {"id": None, "letter": "This is a recommendation for bob", "recipient_id": "2", "sender": "1"  })
+
+    def test_recommendation_toJSON(self):
+        recommendation = Recommendation("1", "This is a recommendation for bob", "2", "1")
+        recommendation_json = recommendation.toJSON()
+        self.assertDictEqual(recommendation_json, {"id": None, "letter": "This is a recommendation for bob", "recipient_id": "2", "sender": "1"  })
+
+
+class NotificationUnitTests(unittest.TestCase):
+
+    def test_new_notification(self):
+        notification = Notification("1", "This is a recommendation for bob", "2", "1")
+        notification_json = notification.toJSON()
+        self.assertDictEqual(notification_json, {"id": None, "letter": "This is a request for a recommendation from ms jade", "recipient_id": "2", "sender": "1"  })
+
+    def test_recommendation_toJSON(self):
+        recommendation = Recommendation("1", "This is a recommendation for bob", "2", "1")
+        recommendation_json = recommendation.toJSON()
+        self.assertDictEqual(recommendation_json, {"id": None, "letter": "This is a request for a recommendation from ms jade", "recipient_id": "2", "sender": "1"  })
+
+
 class UserUnitTests(unittest.TestCase):
 
     def test_new_user(self):
