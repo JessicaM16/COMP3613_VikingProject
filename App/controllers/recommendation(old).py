@@ -21,11 +21,6 @@ def create_recommendation(recommendation, recipient_id):
     db.session.commit()
     return newrecommendation
 
-def create_recommendation_cli(recommendation, recipient_id, sender):
-    newrecommendation = Recommendation(letter=recommendation, recipient_id=recipient_id, sender = sender)
-    db.session.add(newrecommendation)
-    db.session.commit()
-    return newrecommendation
 
 
 
@@ -34,7 +29,6 @@ def get_recommendation(ID):
 
 def get_all_recommendation():
     return Recommendation.query.all()
-  
 
 def get_all_recommendation_json():
     recommendations = Recommendation.query.all()
