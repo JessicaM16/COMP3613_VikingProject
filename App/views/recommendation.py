@@ -21,9 +21,9 @@ def create_recommendation_action():
     if current_identity.role == 'teacher':          # checks that only teachers can create recommendations
         data = request.json         # get data from request body
         recommendation = create_recommendation(data['letter'], data['recipient_id'])
-        return jsonify({"id": f"{recommendation.id}", "message":f" {recommendation.letter}", "recipient_id":f"{recommendation.recipient_id}", "sender": f"{recommendation.sender}" })
+        return jsonify({"id": f"{recommendation.id}", "message":f" {recommendation.letter}", "recipient_id":f"{recommendation.recipient_id}", "sender": f"{recommendation.sender}" }), 201
     else:
-        return jsonify({"message": f"Must be logged in as a teacher"})          #if user is not a teacher
+        return jsonify({"message": f"Must be logged in as a teacher"}), 201          #if user is not a teacher
 
 
 #Request all recommendations a student has
@@ -46,7 +46,8 @@ def request_recommendation():
     data = request.json                                         # get data from request body
     if current_identity.role == "student":                      # teachers are not allowed to request recommendations
         notification = create_notification(data['message'], data['recipient_id'])
-        return jsonify({"message":f" {data['message']} created with id {notification.id} for user {data['recipient_id']}"})
+        return jsonify({"message":f"Request sent"})
+        #return jsonify({"message":f" {data['message']} created with id {notification.id} for user {data['recipient_id']}"})
     else:
         return jsonify({"message":f" teachers can't request recommendations"})
 

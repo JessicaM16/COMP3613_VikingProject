@@ -22,7 +22,7 @@ def create_recommendation(recommendation, recipient_id):
     return newrecommendation
 
 def create_recommendation_cli(recommendation, recipient_id, sender):
-    newrecommendation = Recommendation(letter=recommendation, recipient_id=recipient_id, sender = sender)
+    newrecommendation = Recommendation(ID =1, letter=recommendation, recipient_id=recipient_id)
     db.session.add(newrecommendation)
     db.session.commit()
     return newrecommendation

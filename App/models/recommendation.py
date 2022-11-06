@@ -4,14 +4,14 @@ from App.database import db
 class Recommendation(db.Model):                             
     id = db.Column(db.Integer, primary_key=True)                                        # the recommendation ID
     recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)      # the student that recieves the recommendation (who it is for)
-    sender = db.Column(db.Integer, nullable=False)                                      # the teacher that writes the recommendation (who it is from)                                      
+    sender = db.Column(db.Integer, nullable=True)                                      # the teacher that writes the recommendation (who it is from)                                      
     letter = db.Column(db.String(200), nullable=False)                                  # recommendation message content
 
-    def _init_(self, ID, Letter, recipient_id):
+    def __init__(self, ID, letter, recipient_id):
         self.id = ID                            
         self.letter = letter                        
         self.recipient_id = recipient_id            
-        self.sender                                 
+        self.sender                                
 
     def toJSON(self):
         return{

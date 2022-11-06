@@ -20,9 +20,9 @@ def create_notification_action():
     if current_identity.role == 'teacher':                          # checks that only teachers can create notifications
         data = request.json                                         # get data from request body
         notification = create_notification(data['letter'], data['recipient_id'])
-        return jsonify({"message":f" {data['letter']} created with id {notification.id} for user {current_identity.id}"})
+        return jsonify({"message":f" {data['letter']} created with id {notification.id} for user {current_identity.id}"}), 201
     else:
-        return jsonify({"message": f"Must be logged in as a teacher"})          #if user is not a teacher
+        return jsonify({"message": f"Must be logged in as a teacher"}), 201          #if user is not a teacher
 
 
 

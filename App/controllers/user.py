@@ -22,7 +22,7 @@ def get_all_users_json():
     if not users:
         return []
     users = [user.toJSON() for user in users]
-    return json.dumps(users)
+    return users
 
 def update_user(id, username):
     user = get_user(id)

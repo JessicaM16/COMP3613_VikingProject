@@ -20,9 +20,9 @@ def create_user_action():
     data = request.json 
     user = User.query.filter_by(email=data['email']).first() # if this returns a user, then the email already exists in database
     if user:
-        return jsonify({"message":f" Email Already Used"})
-    create_user(data['username'], data['email'], data['password'], data['role'])
-    return jsonify({"message":f" Account Created"})
+        return jsonify({"message":f" Email Already Used"}), 201
+    user=create_user(data['username'], data['email'], data['password'], data['role'])
+    return jsonify({"message":f" Account Created"}), 201
 
 
 #displays a html page containing all user info

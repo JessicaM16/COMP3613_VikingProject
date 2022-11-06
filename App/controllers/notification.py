@@ -11,7 +11,7 @@ def create_notification(message, recipient_id):
     return newnotification
 
 def create_notification_cli(message, recipient_id, sender):
-    newnotification = Notification(message=message, recipient_id=recipient_id, sender = sender)
+    newnotification = Notification(ID =1, message=message, recipient_id=recipient_id,)
     db.session.add(newnotification)
     db.session.commit()
     return newnotification
